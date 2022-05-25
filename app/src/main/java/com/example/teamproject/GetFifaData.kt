@@ -1,5 +1,7 @@
 package com.example.teamproject
 
+import com.example.teamproject.DataCLass.MatchData
+import com.example.teamproject.DataCLass.UserId
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header

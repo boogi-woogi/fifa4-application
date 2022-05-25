@@ -1,5 +1,6 @@
-package com.example.teamproject
+package com.example.teamproject.DataCLass
 
+import com.example.teamproject.Defence
 import com.google.gson.annotations.SerializedName
 
 data class MatchInfo(

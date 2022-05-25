@@ -1,4 +1,4 @@
-package com.example.teamproject
+package com.example.teamproject.DataCLass
 
 data class Status(
     val aerialSuccess: Int,

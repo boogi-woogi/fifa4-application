@@ -1,4 +1,4 @@
-package com.example.teamproject
+package com.example.teamproject.DataCLass
 
 import com.google.gson.annotations.SerializedName
 
