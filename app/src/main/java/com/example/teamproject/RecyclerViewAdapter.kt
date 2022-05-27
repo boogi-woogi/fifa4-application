@@ -1,7 +1,7 @@
 package com.example.teamproject
 
-import android.app.appsearch.SearchResult
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.teamproject.DataCLass.MatchData
@@ -9,30 +9,28 @@ import com.example.teamproject.databinding.FragmentItemBinding
 import com.example.teamproject.databinding.RowBinding
 import retrofit2.Response
 
-class Adapter(val items: ArrayList<Response<MatchData>>) :
-    RecyclerView.Adapter<Adapter.ViewHolder>() {
-    inner class ViewHolder(val binding: FragmentItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        init {
-            itemClickListener?.ItemClicked(adapterPosition)
-        }
+class RecyclerViewAdapter(val items:ArrayList<Response<MatchData>>): RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
+
+    interface OnItemClickListener{
+        fun OnItemClick(data: Response<MatchData>, position: Int)
     }
 
-    interface OnItemClickListener {
-        fun ItemClicked(position: Int)
-    }
-
-    val itemClickListener: OnItemClickListener? = null
+    var itemClickListener:OnItemClickListener?=null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = FragmentItemBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent, false
+
+        return ViewHolder(
+            FragmentItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
         )
-        return ViewHolder(binding)
+
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-//        ${j.nickname.toString()}", "${j.matchDetail.matchResult.toString()}
+
         val user1 = items[position].body()!!.matchInfo[0].nickname.toString()
         val res1 = items[position].body()!!.matchInfo[0].matchDetail.matchResult.toString()
         val score1 = items[position].body()!!.matchInfo[0].shoot.goalTotal.toString()
@@ -59,10 +57,24 @@ class Adapter(val items: ArrayList<Response<MatchData>>) :
                     "헤딩 슛: " + items[position].body()!!.matchInfo[1].shoot.goalHeading.toString() + "/" + items[position].body()!!.matchInfo[1].shoot.shootHeading.toString() + '\n' +
                     "짧은 패스 : " + items[position].body()!!.matchInfo[1].pass.shortPassSuccess.toString() + "/" + items[position].body()!!.matchInfo[1].pass.shortPassTry.toString() + '\n' +
                     "긴 패스 : " + items[position].body()!!.matchInfo[1].pass.longPassSuccess.toString() + "/" + items[position].body()!!.matchInfo[1].pass.longPassTry.toString()
+
+
+        if(!items[position].body()!!.isClicked){
+            holder.binding.resultDetail.visibility = View.GONE
+        }else
+            holder.binding.resultDetail.visibility = View.VISIBLE
+
     }
 
-    override fun getItemCount(): Int {
-        return items.size
-    }
+    override fun getItemCount(): Int = items.size
 
+    inner class ViewHolder(val binding: FragmentItemBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.resultrow.setOnClickListener {
+                itemClickListener?.OnItemClick(items[adapterPosition], adapterPosition)
+
+            }
+        }
+    }
 }

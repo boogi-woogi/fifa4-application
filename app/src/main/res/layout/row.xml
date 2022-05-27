@@ -4,16 +4,6 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/resultrow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#43092C"
-        android:backgroundTint="#C3C8C8"
-        android:text="TextView"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        android:textStyle="bold" />
 
     <LinearLayout
         android:id="@+id/resultDetail"
@@ -25,31 +15,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/user1_nickname"
+                android:id="@+id/nickname"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:textAlignment="center"/>
             <TextView
-                android:id="@+id/user2_nickname"
+                android:id="@+id/total"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:textAlignment="center"/>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/user1_detail"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
-            <TextView
-                android:id="@+id/user2_detail"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
-        </LinearLayout>
     </LinearLayout>
 
 

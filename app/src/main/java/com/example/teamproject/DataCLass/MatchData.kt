@@ -7,5 +7,5 @@ data class MatchData(
     @SerializedName("matchDate") val matchDate: String,
     @SerializedName("matchType") val matchType: Int,
     @SerializedName("matchInfo") val matchInfo: List<MatchInfo>,
-    val isClicked:Boolean=false
+    var isClicked:Boolean=false
 )
