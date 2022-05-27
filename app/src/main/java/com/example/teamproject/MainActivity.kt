@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.teamproject.DataCLass.MatchData
 import com.example.teamproject.DataCLass.UserId
 import com.example.teamproject.databinding.ActivityMainBinding
+import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,6 +19,7 @@ import retrofit2.Response
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     lateinit var adapter: Adapter
+    val texterr = arrayListOf<String>("최근 전적", "플레이 유형", "상대 전적" )
     var data=ArrayList<Response<MatchData>>()
     var relativeStats = mutableMapOf<String, Array<Int>>()
     companion object {
@@ -33,13 +35,19 @@ class MainActivity : AppCompatActivity() {
                 val searchId = binding.editText.text.toString()
                 unofficial_game_serach(searchId)
             }
+            // 탭 레이아웃
+            viewpager.adapter = ViewPagerAdapter(this@MainActivity)
+            TabLayoutMediator(tabLayout, viewpager){
+                    tab, position->
+                tab.text = texterr[position]
+            }.attach()
         }
     }
     private fun initRecyclerView() {
         adapter= Adapter(data)
-        binding.recyclerView.layoutManager= LinearLayoutManager(this,
-            LinearLayoutManager.VERTICAL,false)
-        binding.recyclerView.adapter=adapter
+        //binding.recyclerView.layoutManager= LinearLayoutManager(this,
+            //LinearLayoutManager.VERTICAL,false)
+        //binding.recyclerView.adapter=adapter
     }
     private fun unofficial_game_serach(searchId: String) {
         relativeStats.clear()
@@ -48,7 +56,7 @@ class MainActivity : AppCompatActivity() {
             var response_User: Response<UserId>
             var response_MatchNum: List<String>
             var response_MatchData: Response<MatchData>
-            binding.recyclerView.visibility=View.GONE
+            //binding.recyclerView.visibility=View.GONE
             binding.progressBar.visibility= View.VISIBLE
             withContext(Dispatchers.IO) {
                 response_User = FifaServiceImp.fifaUser.getUser(
@@ -127,7 +135,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             binding.progressBar.visibility= View.GONE
-            binding.recyclerView.visibility=View.VISIBLE
+            //binding.recyclerView.visibility=View.VISIBLE
             adapter.notifyDataSetChanged()
         }
     }
