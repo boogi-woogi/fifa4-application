@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     lateinit var adapter: Adapter
     var data=ArrayList<Response<MatchData>>()
+    var relativeStats = mutableMapOf<String, Array<Int>>()
     companion object {
         const val TAG = "MainActivity"
     }
@@ -41,6 +42,7 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.adapter=adapter
     }
     private fun unofficial_game_serach(searchId: String) {
+        relativeStats.clear()
         data.clear()
         CoroutineScope(Dispatchers.Main).launch {
             var response_User: Response<UserId>
@@ -63,7 +65,7 @@ class MainActivity : AppCompatActivity() {
                             offset = 0,
                             limit = 10
                         )
-
+                        Log.i("asdasd", "")
                         if (response_MatchNum.size != 0) {
                             for (i in response_MatchNum) {
                                 Log.i("match num : ", i)
@@ -78,6 +80,38 @@ class MainActivity : AppCompatActivity() {
                                         Log.i("${j.nickname.toString()}", "${j.matchDetail.matchResult.toString()}")
                                     }
                                     else{
+                                        if(relativeStats.get(j.nickname)==null){
+                                            when(j.matchDetail.matchResult){
+                                                "패"->{
+//                                                    val tmp=Array<Int>(2){1, 0}
+                                                    val tmp=arrayOf(1, 0)
+                                                    relativeStats.put(j.nickname.toString(), tmp)
+//                                                    Log.i(j.nickname.toString(), (relativeStats.get(j.nickname)!!.get(0)).toString()+"승 "+(relativeStats.get(j.nickname)!!.get(1)).toString()+"패")
+                                                    Log.i(tmp.get(0).toString(), tmp.get(1).toString())
+                                                }
+                                                "승"->{
+//                                                    val tmp=Array<Int>(2){0; 1}
+                                                    val tmp=arrayOf(1, 0)
+                                                    relativeStats.put(j.nickname.toString(), tmp)
+//                                                    Log.i(j.nickname.toString(), (relativeStats.get(j.nickname)!!.get(0)).toString()+"승 "+(relativeStats.get(j.nickname)!!.get(1)).toString()+"패")
+                                                    Log.i(tmp.get(0).toString(), tmp.get(1).toString())
+                                                }
+                                            }
+                                        }
+                                        else{
+                                            when(j.matchDetail.matchResult){
+                                                "패"->{
+                                                    val tmp=Array<Int>(2){relativeStats.get(j.nickname)!!.get(0)+1; relativeStats.get(j.nickname)!!.get(1)}
+                                                    relativeStats.put(j.nickname.toString(), tmp)
+                                                    Log.i(j.nickname.toString(), (relativeStats.get(j.nickname)!!.get(0)).toString()+"승 "+(relativeStats.get(j.nickname)!!.get(1)).toString()+"패")
+                                                }
+                                                "승"->{
+                                                    val tmp=Array<Int>(2){relativeStats.get(j.nickname)!!.get(0); relativeStats.get(j.nickname)!!.get(1)+1}
+                                                    relativeStats.put(j.nickname.toString(), tmp)
+                                                    Log.i(j.nickname.toString(), (relativeStats.get(j.nickname)!!.get(0)).toString()+"승 "+(relativeStats.get(j.nickname)!!.get(1)).toString()+"패")
+                                                }
+                                            }
+                                        }
                                         Log.i("${j.nickname.toString()}", "${j.matchDetail.matchResult.toString()}")
                                     }
                                 }
@@ -88,18 +122,23 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
+            for((key, value) in relativeStats){
+                Log.i("${key}", "${value[0].toString()}승 ${value[1].toString()}패")
+            }
+
             binding.progressBar.visibility= View.GONE
             binding.recyclerView.visibility=View.VISIBLE
             adapter.notifyDataSetChanged()
         }
-
     }
     private fun official_game_serach(searchId: String) {
+        data.clear()
         CoroutineScope(Dispatchers.Main).launch {
             var response_User: Response<UserId>
             var response_MatchNum: List<String>
             var response_MatchData: Response<MatchData>
-
+            binding.recyclerView.visibility = View.GONE
+            binding.progressBar.visibility = View.VISIBLE
             withContext(Dispatchers.IO) {
                 response_User = FifaServiceImp.fifaUser.getUser(
                     value = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50X2lkIjoiMzE2MTA4IiwiYXV0aF9pZCI6IjIiLCJ0b2tlbl90eXBlIjoiQWNjZXNzVG9rZW4iLCJzZXJ2aWNlX2lkIjoiNDMwMDExNDgxIiwiWC1BcHAtUmF0ZS1MaW1pdCI6IjUwMDoxMCIsIm5iZiI6MTY1MjMxOTUwMCwiZXhwIjoxNjY3ODcxNTAwLCJpYXQiOjE2NTIzMTk1MDB9.K6XEURlQhBdKs_NnXoeZYmwubgx5W3jfb3tFLL27LnY",
@@ -124,9 +163,18 @@ class MainActivity : AppCompatActivity() {
                                         value = application.getString(R.string.fifa_api_key),
                                         matchid = i
                                     )
+                                data.add(response_MatchData)
                                 for (j in response_MatchData.body()?.matchInfo!!) {
                                     if (j.accessId == user_accessid) {
-                                        Log.i("총 슈팅 수", "${j.shoot.shootTotal.toString()}")
+                                        Log.i(
+                                            "${j.nickname.toString()}",
+                                            "${j.matchDetail.matchResult.toString()}"
+                                        )
+                                    } else {
+                                        Log.i(
+                                            "${j.nickname.toString()}",
+                                            "${j.matchDetail.matchResult.toString()}"
+                                        )
                                     }
                                 }
                             }
@@ -136,6 +184,9 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
+            binding.progressBar.visibility = View.GONE
+            binding.recyclerView.visibility = View.VISIBLE
+            adapter.notifyDataSetChanged()
         }
     }
 }
