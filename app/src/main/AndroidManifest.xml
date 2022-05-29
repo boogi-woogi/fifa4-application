@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.teamproject">
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    package="com.example.teamproject" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,10 +14,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TeamProject"
-        tools:targetApi="31">
+        tools:targetApi="31" >
+        <activity
+            android:name=".opp_row"
+            android:exported="false"
+            android:label="@string/title_activity_opp_row"
+            android:theme="@style/Theme.TeamProject.NoActionBar" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
