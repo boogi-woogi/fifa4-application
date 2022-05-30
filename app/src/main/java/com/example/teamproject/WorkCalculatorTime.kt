@@ -3,13 +3,6 @@ package com.example.teamproject
 import android.util.Log
 import java.util.*
 
-/**
- * WorkManager
- * Class: CalculatorTime
- * Created by pyg10.
- * Created On 2021-06-01.
- * Description:
- */
 
 fun getSixHourIntervalTime(): Long{
 

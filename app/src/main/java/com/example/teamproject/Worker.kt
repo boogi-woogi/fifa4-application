@@ -17,7 +17,7 @@ import kotlinx.coroutines.withContext
 import java.util.concurrent.TimeUnit
 
 
-var a = 1
+var cnt = 1
 class Worker(appContext: Context, parameters: WorkerParameters) : CoroutineWorker(appContext, parameters) {
     private val channelID = "channel1"
     private var notificationManager: NotificationManager? = null
@@ -44,9 +44,8 @@ class Worker(appContext: Context, parameters: WorkerParameters) : CoroutineWorke
                 setInitialDelay(getSixHourIntervalTime(), TimeUnit.MILLISECONDS).
                 setConstraints(constraints).build()
             //실행 횟수 체크
-            a++
-            val value = a.toString()
-            Log.e("int a", value)
+            cnt++
+            Log.e("실행횟수 : ", cnt.toString() )
 
             WorkManager.getInstance(applicationContext).enqueueUniqueWork(WORK_NAME, ExistingWorkPolicy.REPLACE, oneTimeWorkRequest)
 
@@ -90,8 +89,8 @@ class Worker(appContext: Context, parameters: WorkerParameters) : CoroutineWorke
             //중요도
             val importance = NotificationManager.IMPORTANCE_HIGH
             //채널 생성
-            val channel = NotificationChannel(channelID, "DemoChannel", importance).apply {
-                description =  "this is a demo"
+            val channel = NotificationChannel(channelID, "FIFAChannel", importance).apply {
+                description =  "FIFA Demo"
             }
             notificationManager?.createNotificationChannel(channel)
         } else {
