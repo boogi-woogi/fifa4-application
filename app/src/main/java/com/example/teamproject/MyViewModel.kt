@@ -17,11 +17,13 @@ class MyViewModel(private val fifaRepository: FifaRepository) : ViewModel() {
     val curMatchNum2 = MutableLiveData<List<String>>()
     var curMatchData = MutableLiveData<ArrayList<MatchData>>()
     var curMatchData2= MutableLiveData<ArrayList<MatchData>>()
+    var stateProgressbar = MutableLiveData<Boolean>()
 
 
 
     fun getUserIdBySearchId(searchId: String) = viewModelScope.launch {
         UserId.value=searchId
+        stateProgressbar.value=true
         fifaRepository.getMatchNumBySearchId(searchId).let {
             curMatchNum.postValue(it)
         }
@@ -29,6 +31,7 @@ class MyViewModel(private val fifaRepository: FifaRepository) : ViewModel() {
 
     fun getUserIdBySearchId2(searchId: String) = viewModelScope.launch {
         UserId.value=searchId
+        stateProgressbar.value=true
         fifaRepository.getMatchNumBySearchId2(searchId).let {
             curMatchNum2.postValue(it)
         }
@@ -37,6 +40,7 @@ class MyViewModel(private val fifaRepository: FifaRepository) : ViewModel() {
     fun getMatchDataByMatchNum(matchNum: List<String>) = viewModelScope.launch {
         fifaRepository.getMatchDataByMatchNum(matchNum).let{
             curMatchData.postValue(it)
+            stateProgressbar.value=false
 //            Log.e("어디가", "문젱")
         }
     }
@@ -45,6 +49,7 @@ class MyViewModel(private val fifaRepository: FifaRepository) : ViewModel() {
     fun getMatchDataByMatchNum2(matchNum: List<String>) = viewModelScope.launch {
         fifaRepository.getMatchDataByMatchNum(matchNum).let{
             curMatchData2.postValue(it)
+            stateProgressbar.value=false
 //            Log.e("어디가", "문젱")
         }
     }

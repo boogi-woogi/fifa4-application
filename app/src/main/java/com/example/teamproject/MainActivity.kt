@@ -23,7 +23,6 @@ import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
-    lateinit var adapter: Adapter
     val texterr = arrayListOf<String>("최근 전적", "플레이 유형", "상대 전적" )
     var data=ArrayList<Response<MatchData>>()
     val myViewModel : MyViewModel by viewModels(){
@@ -45,13 +44,6 @@ class MainActivity : AppCompatActivity() {
             sendBtn.setOnClickListener {
                 myViewModel.getUserIdBySearchId(editText.text.toString())
                 myViewModel.getUserIdBySearchId2(editText.text.toString())
-//                myViewModel.curMatchNum.observe(this@MainActivity){
-//                    Log.e("실행", "${it}")
-//                    myViewModel.getMatchDataByMatchNum(it)
-//                }
-//                myViewModel.curMatchData.observe(this@MainActivity){
-//                    Log.e("실행", "${it.get(0).toString()}")
-//                }
             }
             // 탭 레이아웃
             viewpager.adapter = ViewPagerAdapter(this@MainActivity)
@@ -60,6 +52,16 @@ class MainActivity : AppCompatActivity() {
                 tab.text = texterr[position]
             }.attach()
 
+            myViewModel.stateProgressbar.observe(this@MainActivity){
+                if(it) {
+                    binding.progressBar.visibility=View.VISIBLE
+                    binding.viewpager.visibility=View.GONE
+                }
+                else{
+                    binding.progressBar.visibility=View.GONE
+                    binding.viewpager.visibility=View.VISIBLE
+                }
+            }
 
             myViewModel.curMatchNum.observe(this@MainActivity){
                 Log.e("실행", "${it}")

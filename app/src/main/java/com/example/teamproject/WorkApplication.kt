@@ -42,7 +42,8 @@ class WorkApplication : Application() {
             .build()
 
         val oneTimeWorkRequest = OneTimeWorkRequestBuilder<Worker>().setInitialDelay(
-            getSixHourIntervalTime(),
+//            getSixHourIntervalTime(),
+            getOneMinIntervalTime(),
             TimeUnit.MILLISECONDS
         ).setConstraints(constraints).build()
 

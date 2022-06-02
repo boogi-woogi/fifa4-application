@@ -28,7 +28,7 @@
             android:layout_marginHorizontal="8dp">
 
             <TextView
-                android:id="@+id/user1_nickname"
+                android:id="@+id/score"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -37,15 +37,6 @@
                 android:textAlignment="center"
                 android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/user2_nickname"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/nanum_gothic"
-                android:padding="3dp"
-                android:textAlignment="center"
-                android:textSize="20sp" />
         </LinearLayout>
 
         <View

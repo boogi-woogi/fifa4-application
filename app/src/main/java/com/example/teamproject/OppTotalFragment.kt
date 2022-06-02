@@ -86,6 +86,7 @@ class OppTotalFragment : Fragment() {
                 data.add(OppData(i, arrayOf(relativeStats.get(i)!!.get(0), relativeStats.get(i)!!.get(1))))
             }
             adapter.notifyDataSetChanged()
+
         }
     }
 }

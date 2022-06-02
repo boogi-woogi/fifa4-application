@@ -11,6 +11,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.work.*
+import androidx.work.WorkerParameters
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
@@ -41,8 +42,10 @@ class Worker(appContext: Context, parameters: WorkerParameters) : CoroutineWorke
                 .build()
 
             val oneTimeWorkRequest = OneTimeWorkRequestBuilder<Worker>().
-                setInitialDelay(getSixHourIntervalTime(), TimeUnit.MILLISECONDS).
-                setConstraints(constraints).build()
+            setInitialDelay(getOneMinIntervalTime(), TimeUnit.MILLISECONDS).
+            setConstraints(constraints).build()
+//            setInitialDelay(getSixHourIntervalTime(), TimeUnit.MILLISECONDS).
+
             //실행 횟수 체크
             cnt++
             Log.e("실행횟수 : ", cnt.toString() )

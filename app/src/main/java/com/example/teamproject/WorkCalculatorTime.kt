@@ -51,7 +51,7 @@ fun getSixHourIntervalTime(): Long{
 }
 
 //test 1분마다 알람 울리기
-fun getOneMinIntervalTime(i : Int): Long{
+fun getOneMinIntervalTime(): Long{
     Log.e("1분마다","1분함수 울림")
     val currentDate = Calendar.getInstance()
     val dueDate = Calendar.getInstance().apply {

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.example.teamproject.MainActivity.Companion.TAG
 import com.example.teamproject.databinding.FragmentPlayTypeBinding
+import kotlin.math.round
 
 // TODO: Rename parameter arguments, choose names that matc
 class PlayTypeFragment : Fragment() {
@@ -32,12 +33,12 @@ class PlayTypeFragment : Fragment() {
 //
 //        }
         myViewModel.curMatchData.observe(requireActivity()){
-            var shootInBox: Float= 0.1F
-            var shootTotal: Float= 0.1F
-            var shootOutPenalty: Float= 0.1F
-            var longPass: Float= 0.1F
-            var shortPass: Float= 0.1F
-            var throughPass:Float= 0.1F
+            var shootInBox: Float= 0.0F
+            var shootTotal: Float= 0.0F
+            var shootOutPenalty: Float= 0.0F
+            var longPass: Float= 0.0F
+            var shortPass: Float= 0.0F
+            var throughPass:Float= 0.0F
             for (i in myViewModel.curMatchData.value!!) {
                 for (j in i.matchInfo) {
                     if (myViewModel.UserId.value == j.nickname) {
@@ -57,11 +58,11 @@ class PlayTypeFragment : Fragment() {
             shortPass/=30
             throughPass/=30
 
-            binding.boxShoot.text=shootInBox.toString()
-            binding.longShoot.text=shootOutPenalty.toString()
-            binding.shortPass.text=shortPass.toString()
-            binding.avgShoot.text=shootTotal.toString()
-            binding.longPass.text=longPass.toString()
+            binding.boxShoot.text=round((shootInBox*10)/10).toString()
+            binding.longShoot.text=round((shootOutPenalty*10)/10).toString()
+            binding.shortPass.text=round((shortPass*10)/10).toString()
+            binding.avgShoot.text=round((shootTotal*10)/10).toString()
+            binding.longPass.text=round((longPass*10)/10).toString()
         }
 
     }
