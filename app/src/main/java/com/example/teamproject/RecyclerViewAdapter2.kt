@@ -13,12 +13,7 @@ class RecyclerViewAdapter2(var items:ArrayList<OppData>): RecyclerView.Adapter<R
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            OppRowBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
+        return ViewHolder(OppRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
     }
 
@@ -28,6 +23,7 @@ class RecyclerViewAdapter2(var items:ArrayList<OppData>): RecyclerView.Adapter<R
     }
 
     override fun getItemCount(): Int = items.size
+
 
     inner class ViewHolder(val binding: OppRowBinding) : RecyclerView.ViewHolder(binding.root){
 

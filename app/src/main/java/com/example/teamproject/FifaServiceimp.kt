@@ -14,4 +14,5 @@ object FifaServiceImp {
     val fifaUser = retrofit.create(FifaUser::class.java)
     val fifaMatch = retrofit.create(FifaMatch::class.java)
     val fifaMatchData= retrofit.create(FifaMatchData::class.java)
+    val fifaRank= retrofit.create(FifaRank::class.java)
 }

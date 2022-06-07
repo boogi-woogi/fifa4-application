@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import com.example.teamproject.DataCLass.UserId
 import com.example.teamproject.MainActivity.Companion.TAG
 import com.example.teamproject.databinding.FragmentPlayTypeBinding
 import kotlin.math.round
@@ -29,9 +30,70 @@ class PlayTypeFragment : Fragment() {
 
 
 
-//        myViewModel.UserId.observe(requireActivity()) {
-//
-//        }
+        myViewModel.curRank.observe(requireActivity()){
+            for(i in it){
+                if(i.matchType==50){
+                    when(i.division){
+                        800->{
+                            binding.imageView.setImageResource(R.drawable.eight)
+                        }
+                        900->{
+                            binding.imageView.setImageResource(R.drawable.nine)
+                        }
+                        1000->{
+                            binding.imageView.setImageResource(R.drawable.ten)
+                        }
+                        1100->{
+                            binding.imageView.setImageResource(R.drawable.eleven)
+                        }
+                        1200->{
+                            binding.imageView.setImageResource(R.drawable.twelve)
+                        }
+                        1300->{
+                            binding.imageView.setImageResource(R.drawable.thirteen)
+                        }
+                        2000->{
+                            binding.imageView.setImageResource(R.drawable.twenty)
+                        }
+                        2100->{
+                            binding.imageView.setImageResource(R.drawable.twentyone)
+                        }
+                        2200->{
+                            binding.imageView.setImageResource(R.drawable.twentytwo)
+                        }
+                        2300->{
+                            binding.imageView.setImageResource(R.drawable.twentythree)
+                        }
+                        2400->{
+                            binding.imageView.setImageResource(R.drawable.twentyfour)
+                        }
+                        2500->{
+                            binding.imageView.setImageResource(R.drawable.twentyfive)
+                        }
+                        2600->{
+                            binding.imageView.setImageResource(R.drawable.twentysix)
+                        }
+                        2700->{
+                            binding.imageView.setImageResource(R.drawable.twentyseven)
+                        }
+                        2800->{
+                            binding.imageView.setImageResource(R.drawable.twentyeight)
+                        }
+                        2900->{
+                            binding.imageView.setImageResource(R.drawable.twentynine)
+                        }
+                        3000->{
+                            binding.imageView.setImageResource(R.drawable.thirty)
+                        }
+                        3100->{
+                            binding.imageView.setImageResource(R.drawable.thirtyone)
+                        }
+                    }
+                }
+
+            }
+        }
+
         myViewModel.curMatchData.observe(requireActivity()){
             var shootInBox: Float= 0.0F
             var shootTotal: Float= 0.0F
@@ -58,11 +120,13 @@ class PlayTypeFragment : Fragment() {
             shortPass/=30
             throughPass/=30
 
-            binding.boxShoot.text=round((shootInBox*10)/10).toString()
-            binding.longShoot.text=round((shootOutPenalty*10)/10).toString()
-            binding.shortPass.text=round((shortPass*10)/10).toString()
-            binding.avgShoot.text=round((shootTotal*10)/10).toString()
-            binding.longPass.text=round((longPass*10)/10).toString()
+            binding.nickName.text=myViewModel.UserId.value.toString()
+            binding.boxShoot.text=String.format("%.1f", shootInBox)
+            binding.longShoot.text=String.format("%.1f", shootOutPenalty)
+            binding.shortPass.text=String.format("%.1f", shortPass)
+            binding.avgShoot.text=String.format("%.1f", shootTotal)
+            binding.longPass.text=String.format("%.1f", longPass)
+            binding.throughPass.text=String.format("%.1f", throughPass)
         }
 
     }

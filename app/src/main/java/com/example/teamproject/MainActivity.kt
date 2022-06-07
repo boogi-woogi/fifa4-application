@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -40,10 +41,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        /////////////////
+        binding.testbutton.setOnClickListener {
+            Log.i(TAG, "onCreate:${binding.editText.text.toString()}")
+            myViewModel.getRankDataBySearchId(binding.editText.text.toString())
+            myViewModel.curRank.observe(this@MainActivity){
+                Log.i("ffff", myViewModel.curRank.value.toString())
+            }
+        }
+
+        //////////////////
         binding.apply{
             sendBtn.setOnClickListener {
                 myViewModel.getUserIdBySearchId(editText.text.toString())
                 myViewModel.getUserIdBySearchId2(editText.text.toString())
+                myViewModel.getRankDataBySearchId(editText.text.toString())
             }
             // 탭 레이아웃
             viewpager.adapter = ViewPagerAdapter(this@MainActivity)
@@ -64,8 +76,10 @@ class MainActivity : AppCompatActivity() {
             }
 
             myViewModel.curMatchNum.observe(this@MainActivity){
-                Log.e("실행", "${it}")
-                myViewModel.getMatchDataByMatchNum(it)
+                    Log.e("실행", "${it}")
+                    if(it.isEmpty()) Toast.makeText(this@MainActivity, "해당 닉네임의 사용자는 존재하지 않습니다.", Toast.LENGTH_SHORT).show()
+                    myViewModel.getMatchDataByMatchNum(it)
+
             }
             myViewModel.curMatchData.observe(this@MainActivity){
 //                Log.e("실행", it?.toString())

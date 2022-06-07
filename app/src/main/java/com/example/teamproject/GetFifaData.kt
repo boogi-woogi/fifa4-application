@@ -1,6 +1,7 @@
 package com.example.teamproject
 
 import com.example.teamproject.DataCLass.MatchData
+import com.example.teamproject.DataCLass.RankData
 import com.example.teamproject.DataCLass.UserId
 import retrofit2.Response
 import retrofit2.http.GET
@@ -33,4 +34,12 @@ interface FifaMatchData{
         @Header("Authorization") value: String,
         @Path("matchid") matchid: String,
     ): Response<MatchData>
+}
+
+interface FifaRank{
+    @GET("/fifaonline4/v1.0/users/{accessid}/maxdivision")
+    suspend fun getRank(
+        @Header("Authorization") value: String,
+        @Path("accessid") accessid: String
+    ): Response<ArrayList<RankData>>
 }

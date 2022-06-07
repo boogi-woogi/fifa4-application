@@ -2,7 +2,9 @@ package com.example.teamproject.repository
 
 import android.util.Log
 import com.example.teamproject.DataCLass.MatchData
+import com.example.teamproject.DataCLass.RankData
 import com.example.teamproject.DataCLass.UserId
+import com.example.teamproject.FifaRank
 import com.example.teamproject.FifaServiceImp
 import com.example.teamproject.R
 import kotlinx.coroutines.Dispatchers
@@ -47,6 +49,18 @@ class FifaRepository {
             )
             response_MatchData.body()?.let { data.add(it) }
         }
+        return data
+    }
+
+    suspend fun getRankBySearchId(searchId: String) : ArrayList<RankData>{
+        var data=ArrayList<RankData>()
+        FifaServiceImp.fifaRank.getRank(
+            value = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50X2lkIjoiMzE2MTA4IiwiYXV0aF9pZCI6IjIiLCJ0b2tlbl90eXBlIjoiQWNjZXNzVG9rZW4iLCJzZXJ2aWNlX2lkIjoiNDMwMDExNDgxIiwiWC1BcHAtUmF0ZS1MaW1pdCI6IjUwMDoxMCIsIm5iZiI6MTY1MjMxOTUwMCwiZXhwIjoxNjY3ODcxNTAwLCJpYXQiOjE2NTIzMTk1MDB9.K6XEURlQhBdKs_NnXoeZYmwubgx5W3jfb3tFLL27LnY",
+            accessid = FifaServiceImp.fifaUser.getUser(
+                value = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50X2lkIjoiMzE2MTA4IiwiYXV0aF9pZCI6IjIiLCJ0b2tlbl90eXBlIjoiQWNjZXNzVG9rZW4iLCJzZXJ2aWNlX2lkIjoiNDMwMDExNDgxIiwiWC1BcHAtUmF0ZS1MaW1pdCI6IjUwMDoxMCIsIm5iZiI6MTY1MjMxOTUwMCwiZXhwIjoxNjY3ODcxNTAwLCJpYXQiOjE2NTIzMTk1MDB9.K6XEURlQhBdKs_NnXoeZYmwubgx5W3jfb3tFLL27LnY",
+                nickname = searchId
+            ).body()?.accessId.toString()
+        ).body()?.let { data.addAll(it) }
         return data
     }
 
